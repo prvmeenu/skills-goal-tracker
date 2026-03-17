@@ -1,0 +1,35 @@
+{% extends 'skills/index.html' %} {% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-center mb-4">✏️ Edit Goal</h4>
+
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input
+              type="text"
+              name="goal"
+              value="{{ goal.goal }}"
+              required
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3 form-check">
+            <!-- prettier-ignore -->
+            <input type="checkbox" name="is_completed" class="form-check-input" id="is_completed" {% if goal.is_completed %}checked{% endif %} />
+            <label class="form-check-label" for="is_completed">Completed</label>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100">Update</button>
+            <a href="{% url 'daily_goal' %}" class="btn btn-secondary w-100"
+              >Cancel</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

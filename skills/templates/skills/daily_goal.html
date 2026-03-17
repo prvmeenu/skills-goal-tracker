@@ -1,0 +1,125 @@
+{% extends 'skills/index.html' %} {% block content %}
+<h2 class="mb-4">🎯 Daily Goals</h2>
+<!-- ❌ was </h1> -->
+
+<div class="d-flex gap-4 mb-4 ms-2">
+  <span>🎯 Total: <strong>{{ total }}</strong></span>
+  <span>✅ Completed: <strong>{{ completed }}</strong></span>
+  <span>⏳ Pending: <strong>{{ pending }}</strong></span>
+</div>
+
+<!-- Progress Bar -->
+<div class="mb-4 ms-2" style="max-width: 400px">
+  <h6>Progress</h6>
+  <progress
+    value="{{ completed }}"
+    max="{{ total }}"
+    style="width: 100%; height: 20px"
+  ></progress>
+  <small class="text-muted">{{ completed }}/{{ total }} Completed</small>
+</div>
+
+<hr />
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+<!-- ❌ was </p> -->
+{% endif %}
+
+<!-- Add Goal Form -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Add New Goals</h5>
+    <form method="POST" class="row g-3">
+      {% csrf_token %}
+      <div class="col-md-6">
+        <input
+          type="text"
+          name="goal"
+          placeholder="Goal Name"
+          required
+          minlength="3"
+          class="form-control"
+        />
+      </div>
+      <div class="col-md-3 d-flex align-items-center">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            name="is_completed"
+            class="form-check-input"
+            id="is_completed"
+          />
+
+          <label class="form-check-label" for="is_completed">Completed</label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Add Goal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Filter Goals -->
+<div class="mb-3">
+  <a
+    href="?filter=all"
+    class="btn btn-sm {% if request.GET.filter == 'all' or not request.GET.filter %}btn-dark{% else %}btn-outline-dark{% endif %}"
+    >All</a
+  >
+  <a
+    href="?filter=completed"
+    class="btn btn-sm {% if request.GET.filter == 'completed' %}btn-success{% else %}btn-outline-success{% endif %}"
+    >Completed</a
+  >
+  <a
+    href="?filter=pending"
+    class="btn btn-sm {% if request.GET.filter == 'pending' %}btn-warning{% else %}btn-outline-warning{% endif %}"
+    >Pending</a
+  >
+</div>
+
+<!-- Goals List -->
+{% for daily in goals %}
+<div class="card mb-2">
+  <div class="card-body d-flex justify-content-between align-items-center">
+    <div>
+      {% if daily.is_completed %}
+      <span class="badge bg-success me-2">✔ Done</span>
+      {% else %}
+      <span class="badge bg-warning me-2">❌ Pending</span>
+      {% endif %}
+      <span
+        {%
+        if
+        daily.is_completed
+        %}style="text-decoration: line-through; color: grey;"
+        {%
+        endif
+        %}
+      >
+        {{ daily.goal }}
+      </span>
+    </div>
+    <div>
+      <a
+        href="{% url 'edit_goal' daily.id %}"
+        class="btn btn-sm btn-warning me-2"
+        >Edit</a
+      >
+      <!-- ❌ was {%url without space -->
+      <a
+        href="{% url 'delete_goal' daily.id %}"
+        class="btn btn-sm btn-danger me-2"
+        >Delete</a
+      >
+      <a href="{% url 'toggle_goal' daily.id %}" class="btn btn-sm btn-primary"
+        >Toggle</a
+      >
+    </div>
+  </div>
+</div>
+{% empty %}
+<div class="alert alert-info">No Goals added yet!</div>
+{% endfor %} {% endblock %}

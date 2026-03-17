@@ -1,0 +1,41 @@
+{% extends 'skills/index.html' %} {% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-center mb-4">Login</h4>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              required
+              class="form-control"
+            />
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Submit</button>
+        </form>
+        <p class="text-center mt-3">
+          Don't have an account?
+          <a href="{% url 'user_register'%}">Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

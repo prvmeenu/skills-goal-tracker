@@ -1,0 +1,13 @@
+{% extends 'skills/index.html' %} {% block content %}
+<h4 class="mb-4">Notifications</h4>
+
+{% for notifiation in notifications %}
+<div class="card mb-2">
+  <div class="card-body">
+    <p class="mb-1">{{ notifiation.message }}</p>
+    <small class="text-muted">{{notifiation.created_at|timesince }} ago</small>
+  </div>
+</div>
+{% empty %}
+<div class="alert alert-info">No Notifications yet.</div>
+{% endfor %} {% endblock %}

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual Environment
+venv/
+env/
+.env
+.venv
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# Environment Variables
+.env
+.env.local
+.env.production
+*.env
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Migrations (optional - some teams keep these)
+# */migrations/
+
+# Logs
+*.log
+
+# Coverage
+.coverage
+htmlcov/

@@ -1,0 +1,51 @@
+<!--{% extends 'skills/index.html' %} {% block content %}
+<h4 class="mb-4">📊 Dashboard</h4>
+
+
+<div class="d-flex gap-4 mb-4 ms-2">
+<span>📅 Total: <strong>{{ weekly_total }}</strong></span>
+<span>✅ Completed: <strong>{{ weekly_completed }}</strong></span>
+<span>⏳ Pending: <strong>{{ weekly_pending }}</strong></span>
+</div>
+
+
+<div class="card mb-4">
+<div class="card-body">
+<h5 class="card-title">📈 Last 7 Days</h5>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="weeklyChart" width="400" height="200"></canvas>
+</div>
+</div>
+
+<script>
+const ctx = document.getElementById('weeklyChart').getContext('2d');
+const weeklyChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels|safe }},
+        datasets: [
+            {
+                label: 'Total Goals',
+                data: {{ total_data|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            },
+            {
+                label: 'Completed',
+                data: {{ completed_data|safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            }
+        ]
+    },
+    options: {
+        responsive: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}
+-->
