@@ -23,7 +23,7 @@ Security: CSRF protection on all forms and @login_required decorators to protect
 Clone the repository:
 
 Bash
-git clone https://github.com/yourusername/skill-goal-tracker.git
+git clone [https://github.com/yourusername/skill-goal-tracker.git](https://github.com/prvmeenu/skills-goal-tracker)
 cd skill-goal-tracker
 Set up Virtual Environment:
 
