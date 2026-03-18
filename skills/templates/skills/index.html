@@ -1,117 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <title>Home</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container" style="float: left;">
+  <head>
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      progress::-webkit-progress-value {
+        background-color: #198754; /* Bootstrap green */
+      }
+      progress::-moz-progress-bar {
+        background-color: #198754; /* Firefox */
+      }
+      progress {
+        accent-color: #198754; /* Modern browsers */
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container" style="float: left">
         <div class="navbar-nav">
-        <a class="nav-link {% if request.resolver_match.url_name == 'home_page' %}active{% endif %}" href="{% url 'home_page'%}">Home</a>&nbsp;
-        <a class="nav-link {% if request.resolver_match.url_name == 'skill_list' %}active{% endif %}" href="{% url 'skill_list' %}">Skills</a>&nbsp;
-        <a class="nav-link {% if request.resolver_match.url_name == 'daily_goal' %}active{% endif %}" href="{% url 'daily_goal' %}">Daily Goals</a>&nbsp;
-        
-    </div>
-    
-        <div class="ms-auto d-flex align-items-center gap-3" style="float: right;">
-            {% if user.is_authenticated %}            
-            <span class="text-white">Welcome, {{ user.username }}
-                <div class="dropdown">
-                <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">🔔                   
-                    {% if unread > 0 %}
-                    <span class="badge bg-danger">{{ unread }}</span>
-                     {% endif %}                   
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" style="width: 300px; max-height: 400px; overflow-y: auto;">
-                    {% for notification in recent_notification %}
-                    <li>
-                        <div class="dropdown-item">
-                            <p class="mb-0">{{ notification.message }}</p>
-                            <small class="text-muted">{{notification.created_at|timesince}} ago</small>
-                        </div>
-                    </li>
-                    {% empty %}
-                    <li>
-                        <div class="dropdown-item text-muted"> No notification yet</div>
-                    </li>
-                    {% endfor %}
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-center" href="{% url 'notifications'%}">View All</a></li>
-                </ul>
-            </div>            
-            <a class="nav-link text-white" href="{% url 'user_logout' %}">Logout</a>
-            </span>
-            {% else %}
-            <h2>Please login to continue</h2>
-            <a class="nav-link text-white" href="{% url 'user_login' %}">Login</a> &nbsp;       
-            <a class="nav-link text-white" href="{% url 'user_register' %}">Register</a>&nbsp;
-            {% endif %}        
+          <a
+            class="nav-link {% if request.resolver_match.url_name == 'home_page' %}active{% endif %}"
+            href="{% url 'home_page'%}"
+            >Home</a
+          >&nbsp;
+          <a
+            class="nav-link {% if request.resolver_match.url_name == 'skill_list' %}active{% endif %}"
+            href="{% url 'skill_list' %}"
+            >Skills</a
+          >&nbsp;
+          <a
+            class="nav-link {% if request.resolver_match.url_name == 'daily_goal' %}active{% endif %}"
+            href="{% url 'daily_goal' %}"
+            >Daily Goals</a
+          >&nbsp;
         </div>
+
+        <div
+          class="ms-auto d-flex align-items-center gap-3"
+          style="float: right"
+        >
+          {% if user.is_authenticated %}
+          <span class="text-white">Welcome, {{ user.username }}</span>
+          <div class="dropdown">
+            <a
+              class="nav-link text-white dropdown-toggle"
+              href="#"
+              data-bs-toggle="dropdown"
+              >🔔 {% if unread > 0 %}
+              <span class="badge bg-danger">{{ unread }}</span>
+              {% endif %}
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              style="width: 300px; max-height: 400px; overflow-y: auto"
+            >
+              {% for notification in recent_notification %}
+              <li>
+                <div class="dropdown-item">
+                  <p class="mb-0">{{ notification.message }}</p>
+                  <small class="text-muted"
+                    >{{notification.created_at|timesince}} ago</small
+                  >
+                </div>
+              </li>
+              {% empty %}
+              <li>
+                <div class="dropdown-item text-muted">No notification yet</div>
+              </li>
+              {% endfor %}
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a
+                  class="dropdown-item text-center"
+                  href="{% url 'notifications'%}"
+                  >View All</a
+                >
+              </li>
+            </ul>
+          </div>
+          <a class="nav-link text-white" href="{% url 'user_logout' %}"
+            >Logout</a
+          >
+
+          {% else %}
+          <h2>Please login to continue</h2>
+          <a class="nav-link text-white" href="{% url 'user_login' %}">Login</a>
+          &nbsp;
+          <a class="nav-link text-white" href="{% url 'user_register' %}"
+            >Register</a
+          >&nbsp; {% endif %}
         </div>
+      </div>
     </nav>
 
-    <div style="clear: both;"></div>
+    <div style="clear: both"></div>
     <div class="container mt-4">
-    {% block content %}
-    <div class="text-center mt-5">
-    <h1 class="mb-3">🚀 Skills & Goals Tracker</h1>
-    <p class="text-muted mb-5">Track your skills, manage your daily goals and analyze your progress</p>
-</div>
+      {% block content %}
+      <div class="text-center mt-5">
+        <h1 class="mb-3">🚀 Skills & Goals Tracker</h1>
+        <p class="text-muted mb-5">
+          Track your skills, manage your daily goals and analyze your progress
+        </p>
+      </div>
 
-<!-- Features -->
-<div class="row text-center mb-5">
-    <div class="col-md-3">
-        <div class="card h-100 p-3">
-            <div class="card-body">
+      <!-- Features -->
+      <div class="row justify-content-center text-center mb-5">
+        <div class="row text-center mb-5">
+          <div class="col-md-3">
+            <div class="card h-100 p-3">
+              <div class="card-body">
                 <h1>🛠️</h1>
                 <h5 class="card-title">Skills Tracker</h5>
-                <p class="text-muted">Add and track your skills with star ratings from 1 to 10</p>
+                <p class="text-muted">
+                  Add and track your skills with star ratings from 1 to 10
+                </p>
+              </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card h-100 p-3">
-            <div class="card-body">
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 p-3">
+              <div class="card-body">
                 <h1>🎯</h1>
                 <h5 class="card-title">Daily Goals</h5>
-                <p class="text-muted">Set daily goals, track completion and monitor your progress</p>
+                <p class="text-muted">
+                  Set daily goals, track completion and monitor your progress
+                </p>
+              </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="col-md-3">
-        <div class="card h-100 p-3">
-            <div class="card-body">
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 p-3">
+              <div class="card-body">
+                <h1>🔐</h1>
+                <h5 class="card-title">Authentication</h5>
+                <p class="text-muted">User can Register, Login and Logout</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card h-100 p-3">
+              <div class="card-body">
                 <h1>🔔</h1>
                 <h5 class="card-title">Notifications</h5>
-                <p class="text-muted">Get notified when you add skills or complete your goals</p>
+                <p class="text-muted">
+                  Get notified when you add skills or complete your goals
+                </p>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-<!-- Call to action -->
-{% if user.is_authenticated %}
-<div class="text-center">
-    <h4>Welcome back, {{ user.username }}! 👋</h4>
-    <div class="mt-3 d-flex justify-content-center gap-3">
-        <a href="{% url 'skill_list' %}" class="btn btn-primary">My Skills</a>
-        <a href="{% url 'daily_goal' %}" class="btn btn-success">My Goals</a>
-        
+      <!-- Call to action -->
+      {% if user.is_authenticated %}
+      <div class="text-center">
+        <h4>Welcome back, {{ user.username }}! 👋</h4>
+        <div class="mt-3 d-flex justify-content-center gap-3">
+          <a href="{% url 'skill_list' %}" class="btn btn-primary">My Skills</a>
+          <a href="{% url 'daily_goal' %}" class="btn btn-success">My Goals</a>
+        </div>
+      </div>
+      {% else %}
+      <div class="text-center">
+        <h4>Get started today! 💪</h4>
+        <div class="mt-3 d-flex justify-content-center gap-3">
+          <a href="{% url 'user_register' %}" class="btn btn-primary"
+            >Register</a
+          >
+          <a href="{% url 'user_login' %}" class="btn btn-outline-primary"
+            >Login</a
+          >
+        </div>
+      </div>
+      {% endif %} {% endblock %}
     </div>
-</div>
-{% else %}
-<div class="text-center">
-    <h4>Get started today! 💪</h4>
-    <div class="mt-3 d-flex justify-content-center gap-3">
-        <a href="{% url 'user_register' %}" class="btn btn-primary">Register</a>
-        <a href="{% url 'user_login' %}" class="btn btn-outline-primary">Login</a>
-    </div>
-</div>
-{% endif %}
-    {% endblock %}
-    </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
+</html>

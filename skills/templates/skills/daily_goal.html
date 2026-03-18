@@ -1,6 +1,5 @@
 {% extends 'skills/index.html' %} {% block content %}
 <h2 class="mb-4">🎯 Daily Goals</h2>
-<!-- ❌ was </h1> -->
 
 <div class="d-flex gap-4 mb-4 ms-2">
   <span>🎯 Total: <strong>{{ total }}</strong></span>
@@ -23,7 +22,6 @@
 
 {% if error %}
 <div class="alert alert-danger">{{ error }}</div>
-<!-- ❌ was </p> -->
 {% endif %}
 
 <!-- Add Goal Form -->
@@ -108,18 +106,22 @@
         class="btn btn-sm btn-warning me-2"
         >Edit</a
       >
-      <!-- ❌ was {%url without space -->
+
       <a
         href="{% url 'delete_goal' daily.id %}"
         class="btn btn-sm btn-danger me-2"
         >Delete</a
       >
-      <a href="{% url 'toggle_goal' daily.id %}" class="btn btn-sm btn-primary"
-        >Toggle</a
-      >
+      <a href="{% url 'toggle_goal' daily.id %}" class="btn btn-sm btn-primary">
+        {% if daily.is_completed %}Pending {% else %}Complete{% endif %}
+      </a>
     </div>
   </div>
 </div>
-{% empty %}
+{% empty %} {% if request.GET.filter == 'completed' %}
+<div class="alert alert-info">No Completed Goals yet.</div>
+{% elif request.GET.filter == 'pending' %}
+<div class="alert alert-info">No Pending Goals.</div>
+{% else %}
 <div class="alert alert-info">No Goals added yet!</div>
-{% endfor %} {% endblock %}
+{% endif %} {% endfor %} {% endblock %}

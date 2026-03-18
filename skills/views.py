@@ -275,13 +275,20 @@ def user_login(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
 
+        if not User.objects.filter(username=username).exists():
+            return render(
+                request,
+                "skills/login.html",
+                {"error": "Account not found. Please register"},
+            )
+
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect("daily_goal")
+            return redirect("home_page")
         else:
-            return redirect(
+            return render(
                 request, "skills/login.html", {"error": "Invalid Username or Password."}
             )
 
