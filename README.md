@@ -1,6 +1,8 @@
 #Skill & Goal Tracker (Full stack Django)
 A professional personal development web app to manage learning paths and track daily progress.
 
+**Live Demo:** https://prvmeenu.pythonanywhere.com
+
 ##Project Overview
 This application serves as a centralized hub for users to define long-term Skills and break them down into actionable Daily Goals. It features a robust authentication system, real-time progress visualization, and a modern, responsive interface.
 
