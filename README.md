@@ -46,13 +46,13 @@ The Dashboard
 A clean bootstrap interface displaying the user's active skills and filtered view of daily goals.
 
 ##Pages
-Page Description
-Home Landing page with app features
-Register Create a new account
-Login Login to your account
-Skills Add and manage your skills
-Daily Goals Add, complete and track daily goals
-Notifications View all in-app notifications
+Page Description,
+Home - Landing page with app features.
+Register - Create a new account
+Login - Login to your account
+Skills - Add and manage your skills
+Daily Goals - Add, complete and track daily goals
+Notifications - View all in-app notifications
 
 ##Notification working
 Notifications are triggered automatically using Django Signals:
